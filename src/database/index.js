@@ -1,7 +1,9 @@
 import pgp from 'pg-promise';
 import { config } from 'dotenv';
+import path, { join } from 'path';
+import { fileURLToPath } from 'url';
 
-config();
+config();   
 
 const user = process.env.DB_USER;
 const password = process.env.DB_PASSWORD;
@@ -11,8 +13,8 @@ const database = process.env.DB_NAME;
 const dbURL = `postgres://${user}:${password}@${host}:${port}/${database}`;
 
 
-export default function connect() {
-    const pg = pgp() (dbURL);
+const pg = pgp() (dbURL);
+export function connect() {
 
     pg.query("SELECT 1 + 1 AS result;").then(result => {
         console.log(result);
@@ -20,3 +22,13 @@ export default function connect() {
         console.log(error);
     }); 
 }
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const filePath = join(__dirname, "create-tables.sql");
+const query = new pgp.QueryFile(filePath);
+
+pg.query(query);
+
+export default pg;
