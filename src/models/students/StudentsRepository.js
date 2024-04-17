@@ -3,7 +3,7 @@ export class StudentsRepository {
     this.students = [];
   }
 
-  getStudents() {
+  async getStudents() {
     return this.students;
   }
 
@@ -15,7 +15,7 @@ export class StudentsRepository {
     this.students.push(student);
   }
 
-  updateStudent(id, name, age) {
+  updateStudent(id, name, age, email, code, grade) {
     const student = this.getStudentById(id);
 
     if (student) {
