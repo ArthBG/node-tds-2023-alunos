@@ -32,7 +32,7 @@ export const createUser = async (req, res) => {
   const userAlreadyExists = await usersRepository.getUserByEmail(email);
 
   if (userAlreadyExists) {
-    return res.status(409).send({ message: "Usuário já cadastrado" });
+    return res.status(409).send({ message: "Email já cadastrado" });
   }
 
   const passwordHash = await hash(password, 8);
